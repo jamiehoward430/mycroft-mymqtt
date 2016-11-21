@@ -1,0 +1,9 @@
+{
+  "utterance": "power off the tv",
+  "intent_type": "MyMQTTCmdIntent",
+  "intent": {
+    "CommandKeyword": "power",
+    "ModuleKeyword": "tv",
+    "ActionKeyword": "off"
+  }
+}

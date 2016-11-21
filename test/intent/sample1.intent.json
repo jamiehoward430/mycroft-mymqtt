@@ -1,0 +1,9 @@
+{
+  "utterance": "Turn the light on",
+  "intent_type": "MyMQTTCmdIntent",
+  "intent": {
+    "CommandKeyword": "turn",
+    "ModuleKeyword": "light",
+    "ActionKeyword": "on"
+  }
+}
