@@ -1,4 +1,3 @@
-# mycroft-mymqtt
 # MQTT for MycroftAI
 
 This is a skill written for mycroft to publish commands over an mqtt broker for home automation or any other purpose.
@@ -26,13 +25,19 @@ Now you have paho-mqtt installed move the mycroft skills directory and download 
 - Rename it `mv mycroft-mymqtt MyMQTT`
 
 # Setup mycroft.ini
-Add the following to your config file and adjust to your needs. currently tls is not supported, coming soon!
+Add the following lines to your config file and adjust to your needs. currently tls is not supported, coming soon!
 `[MyMQTTSkill]`
+
 `protocol = "mqtt"`
+
 `mqtt-host = "test.mosquitto.org"`
+
 `mqtt-port = "1883"`
+
 `mqtt-auth = "yes"`
+
 `mqtt-user = "youruser"`
+
 `mqtt-pass = "yourpass"`
 
 Thas it, now start mycroft and start turning your light on and off.
