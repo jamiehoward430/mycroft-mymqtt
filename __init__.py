@@ -34,9 +34,9 @@ class MyMQTTSkill(MycroftSkill):
         self.register_intent(intent, self.handle_single_command)
         
     def handle_single_command(self, message):
-        cmd_name = message.metadata.get("CommandKeyword")
-        mdl_name = message.metadata.get("ModuleKeyword")
-        act_name = message.metadata.get("ActionKeyword")
+        cmd_name = message.data.get("CommandKeyword")
+        mdl_name = message.data.get("ModuleKeyword")
+        act_name = message.data.get("ActionKeyword")
         dev_name = mdl_name.replace(' ', '_')
         
         if act_name:
