@@ -22,7 +22,7 @@ If you have not yet setup mycroft then simply add `paho-mqtt==1.1` to the requir
 Now you have paho-mqtt installed move the mycroft skills directory and download the skill.
 - Move into the directory `cd ~/mycroft-core/mycroft/skills`
 - Clone the repository `git clone https://github.com/jamiehoward430/mycroft-mymqtt.git`
-- Rename it `mv mycroft-mymqtt MyMQTT`
+- Rename it `mv mycroft-mymqtt mymqtt`
 
 # Setup mycroft.conf
 Add the following lines to your config file and adjust to your needs. currently tls is not supported, coming soon!
