@@ -1,6 +1,6 @@
 {
   "utterance": "Turn the light on",
-  "intent_type": "MyMQTTCmdIntent",
+  "intent_type": "mymqttIntent",
   "intent": {
     "CommandKeyword": "turn",
     "ModuleKeyword": "light",
