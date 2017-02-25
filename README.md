@@ -33,7 +33,7 @@ Add the following lines to your config file and adjust to your needs. currently 
     
     "mqtt-host": "test.mosquitto.org",
     
-    "mqtt-port": "1883",
+    "mqtt-port": 1883,
     
     "mqtt-auth": "yes",
     
