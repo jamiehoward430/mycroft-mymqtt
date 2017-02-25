@@ -11,10 +11,10 @@ __author__ = 'jamiehoward430'
 
 LOGGER = getLogger(__name__)
 
-class MyMQTTSkill(MycroftSkill):
+class mymqttskill(MycroftSkill):
 
     def __init__(self):
-        super(MyMQTTSkill, self).__init__(name="MyMQTTSkill")
+        super(mymqttskill, self).__init__(name="mymqttskill")
        
         self.protocol = self.config["protocol"]
 	self.mqtthost = self.config["mqtt-host"]
@@ -30,7 +30,7 @@ class MyMQTTSkill(MycroftSkill):
         
         
     def __build_single_command(self):
-        intent = IntentBuilder("MyMQTTCmdIntent").require("CommandKeyword").require("ModuleKeyword").optionally("ActionKeyword").build()
+        intent = IntentBuilder("mymqttIntent").require("CommandKeyword").require("ModuleKeyword").require("ActionKeyword").build()
         self.register_intent(intent, self.handle_single_command)
         
     def handle_single_command(self, message):
@@ -60,4 +60,4 @@ class MyMQTTSkill(MycroftSkill):
         pass
         
 def create_skill():
-    return MyMQTTSkill()
+    return mymqttskill()
