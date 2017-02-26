@@ -26,22 +26,16 @@ Now you have paho-mqtt installed move the mycroft skills directory and download 
 
 # Setup mycroft.conf
 Add the following lines to your config file and adjust to your needs. currently tls is not supported, coming soon!
-
-    "MyMQTTSkill": {
-  
+```
+  "mymqttskill": {
     "protocol": "mqtt",
-    
-    "mqtt-host": "test.mosquitto.org",
-    
-    "mqtt-port": 1883,
-    
+    "mqtt-ssl": "yes",
+    "mqtt-ca-cert": "/etc/ssl/certs/ca-certificates.crt",
+    "mqtt-host": "example.com",
+    "mqtt-port": 8883,
     "mqtt-auth": "yes",
-    
-    "mqtt-user": "youruser",
-    
-    "mqtt-pass": "yourpass"
-    
-    }
-
-
+    "mqtt-user": "user",
+    "mqtt-pass": "pass"
+  }
+```
 Thas it, now start mycroft and start turning your light on and off.
