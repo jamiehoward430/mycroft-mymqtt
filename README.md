@@ -25,7 +25,8 @@ Now you have paho-mqtt installed move the mycroft skills directory and download 
 - Rename it `mv mycroft-mymqtt mymqtt`
 
 # Setup mycroft.conf
-Add the following lines to your config file and adjust to your needs. currently tls is not supported, coming soon!
+Add the following lines to your config file and adjust to your needs, if you ar not using SSL or authentication
+just change them to no.
 ```
   "mymqttskill": {
     "protocol": "mqtt",
