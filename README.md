@@ -27,6 +27,12 @@ Now you have paho-mqtt installed move the mycroft skills directory and download 
 # Setup mycroft.conf
 Add the following lines to your config file and adjust to your needs, if you ar not using SSL or authentication
 just change them to no.
+If you are using SSL and a self signed certificate you will need to change mqtt-ca-cert to the location of your cerftificate,
+Or you can add it the default trusted certificates.
+
+- Copy your certificate to directory:```sudo cp yourcert.crt /usr/local/share/ca-certificates/yourcert.crt```
+- Update the CA store:```sudo update-ca-certificates```
+
 ```
   "mymqttskill": {
     "protocol": "mqtt",
