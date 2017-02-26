@@ -17,6 +17,8 @@ class mymqttskill(MycroftSkill):
         super(mymqttskill, self).__init__(name="mymqttskill")
        
         self.protocol = self.config["protocol"]
+	self.mqttssl = self.config["mqtt-ssl"]
+	self.mqttca = self.config["mqtt-ca-cert"]
 	self.mqtthost = self.config["mqtt-host"]
 	self.mqttport = self.config["mqtt-port"]
 	self.mqttauth = self.config["mqtt-auth"]
@@ -45,7 +47,9 @@ class mymqttskill(MycroftSkill):
         if (self.protocol == "mqtt"):
 	    mqttc = mqtt.Client("MycroftAI")
 	    if (self.mqttauth == "yes"):
-	        mqttc.username_pw_set(self.mqttuser,self.mqttpass) 
+	        mqttc.username_pw_set(self.mqttuser,self.mqttpass)
+	    if (self.mqttssl == "yes"):
+		mqttc.tls_set(self.mqttca) #/etc/ssl/certs/ca-certificates.crt
             mqttc.connect(self.mqtthost,self.mqttport)
 	    mqttc.publish("/mycroft/" + cmd_name + "/" + dev_name + "/" + act_name, act_name)
 	    mqttc.disconnect()
