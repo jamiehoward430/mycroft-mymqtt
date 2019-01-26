@@ -15,27 +15,21 @@ Currently it will publish the action to a topic built from the commands said, fo
 
 ## Notes
 ### Setup mycroft.conf
-Add the following lines to your config file and adjust to your needs, if you ar not using SSL or authentication
-just change them to no.
-If you are using SSL and a self signed certificate you will need to change mqtt-ca-cert to the location of your cerftificate,
+Add the following lines to your settings.json and adjust to your needs.
+If you are using SSL and a self signed certificate you will need to change mqttca to the location of your cerftificate,
 Or you can add it the default trusted certificates.
 
 - Copy your certificate to directory:```sudo cp yourcert.crt /usr/local/share/ca-certificates/yourcert.crt```
 - Update the CA store:```sudo update-ca-certificates```
 
 ```
-  "mymqttskill": {
-    "protocol": "mqtt",
-    "mqtt-ssl": "yes",
-    "mqtt-ca-cert": "/etc/ssl/certs/ca-certificates.crt",
-    "mqtt-host": "example.com",
-    "mqtt-port": 8883,
-    "mqtt-auth": "yes",
-    "mqtt-user": "user",
-    "mqtt-pass": "pass"
-  }
+    "mqttca": "/etc/ssl/certs/ca-certificates.crt",
+    "mqtthost": "example.com",
+    "mqttport": 8883,
+    "mqttuser": "user",
+    "mqttpass": "pass"
 ```
-Thas it, now start mycroft and start turning your light on and off.
+Thats it, now start mycroft and start turning your light on and off.
 
 ## Supported Devices
 platform_picroft platform_plasmoid 
