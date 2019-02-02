@@ -4,10 +4,9 @@ from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
 
-from urllib2 import urlopen
 import paho.mqtt.client as mqtt
 
-__author__ = 'jamiehoward430'
+__author__ = 'jamiehoward430/JonStratton'
 
 LOGGER = getLogger(__name__)
 
@@ -15,50 +14,41 @@ class mymqttskill(MycroftSkill):
 
     def __init__(self):
         super(mymqttskill, self).__init__(name="mymqttskill")
-       
-        self.protocol = self.config["protocol"]
-	self.mqttssl = self.config["mqtt-ssl"]
-	self.mqttca = self.config["mqtt-ca-cert"]
-	self.mqtthost = self.config["mqtt-host"]
-	self.mqttport = self.config["mqtt-port"]
-	self.mqttauth = self.config["mqtt-auth"]
-	self.mqttuser = self.config["mqtt-user"]
-	self.mqttpass = self.config["mqtt-pass"]
- 
+        if ( not self.settings.get('mqtthost') ):
+           self.settings['mqtthost'] = 'localhost'
+        if ( not self.settings.get('mqttport') ):
+           self.settings['mqttport'] = '1883'
+        self.mqttc = mqtt.Client("MycroftAI")
+
+    def shutdown(self):
+        self.mqttc.disconnect()
     
     def initialize(self):
-        self.load_data_files(dirname(__file__))
-        self. __build_single_command()
-        
+        self.__build_single_command()
         
     def __build_single_command(self):
         intent = IntentBuilder("mymqttIntent").require("CommandKeyword").require("ModuleKeyword").require("ActionKeyword").build()
         self.register_intent(intent, self.handle_single_command)
         
     def handle_single_command(self, message):
-        cmd_name = message.data.get("CommandKeyword")
-        mdl_name = message.data.get("ModuleKeyword")
-        act_name = message.data.get("ActionKeyword")
-        dev_name = mdl_name.replace(' ', '_')
+        cmd_name = message.data.get("CommandKeyword").replace(' ', '_')
+        dev_name = message.data.get("ModuleKeyword").replace(' ', '_')
+        act_name = message.data.get("ActionKeyword").replace(' ', '_')
         
-        if act_name:
-            cmd_name += '_' + act_name
+        try:
+            if (self.settings.get('mqttuser')):
+                self.mqttc.username_pw_set(self.settings['mqttuser'],self.setting['mqttpass'])
+            if (self.settings.get('mqttca')):
+                self.mqttc.tls_set(self.settings['mqttca']) #/etc/ssl/certs/ca-certificates.crt
+            LOGGER.info( "MQTT Connect: " + self.settings['mqtthost'] + ':' + str(self.settings['mqttport']) )
+            self.mqttc.connect(self.settings['mqtthost'], self.settings['mqttport'])
 
-        if (self.protocol == "mqtt"):
-	    mqttc = mqtt.Client("MycroftAI")
-	    if (self.mqttauth == "yes"):
-	        mqttc.username_pw_set(self.mqttuser,self.mqttpass)
-	    if (self.mqttssl == "yes"):
-		mqttc.tls_set(self.mqttca) #/etc/ssl/certs/ca-certificates.crt
-            mqttc.connect(self.mqtthost,self.mqttport)
-	    mqttc.publish("/mycroft/" + cmd_name + "/" + dev_name + "/" + act_name, act_name)
-	    mqttc.disconnect()
-	    self.speak_dialog("cmd.sent")
-            LOGGER.info(dev_name + "-" + cmd_name)
-
-	else:
+            self.mqttc.publish(dev_name + "/" + cmd_name, act_name)
+            self.mqttc.disconnect()
+            self.speak_dialog("cmd.sent")
+            LOGGER.info("MQTT Publish: " + dev_name + "/" + cmd_name + "/" + act_name)
+        except:
             self.speak_dialog("not.found", {"command": cmd_name, "action": act_name, "module": dev_name})
-            LOGGER.error("Error: {0}".format(e))
         
     def stop(self):
         pass
