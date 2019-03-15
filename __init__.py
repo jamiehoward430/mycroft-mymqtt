@@ -17,7 +17,7 @@ class mymqttskill(MycroftSkill):
         if ( not self.settings.get('mqtthost') ):
            self.settings['mqtthost'] = 'localhost'
         if ( not self.settings.get('mqttport') ):
-           self.settings['mqttport'] = '1883'
+           self.settings['mqttport'] = 1883
         self.mqttc = mqtt.Client("MycroftAI")
 
     def shutdown(self):
@@ -41,13 +41,14 @@ class mymqttskill(MycroftSkill):
             if (self.settings.get('mqttca')):
                 self.mqttc.tls_set(self.settings['mqttca']) #/etc/ssl/certs/ca-certificates.crt
             LOGGER.info( "MQTT Connect: " + self.settings['mqtthost'] + ':' + str(self.settings['mqttport']) )
-            self.mqttc.connect(self.settings['mqtthost'], self.settings['mqttport'])
+            self.mqttc.connect(self.settings['mqtthost'], int(self.settings['mqttport']))
 
-            self.mqttc.publish(dev_name + "/" + cmd_name, act_name)
+            self.mqttc.publish("/" + dev_name + "/" + cmd_name, act_name)
             self.mqttc.disconnect()
             self.speak_dialog("cmd.sent")
             LOGGER.info("MQTT Publish: " + dev_name + "/" + cmd_name + "/" + act_name)
-        except:
+        except Exception as e:
+            LOGGER.info("MQTT Exception: %s" % e)
             self.speak_dialog("not.found", {"command": cmd_name, "action": act_name, "module": dev_name})
         
     def stop(self):
