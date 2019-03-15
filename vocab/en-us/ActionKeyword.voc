@@ -1,6 +1,7 @@
 on
 off
-turn on
-turn off
-return home
-clean spot
+start
+stop
+pause
+resume
+dock

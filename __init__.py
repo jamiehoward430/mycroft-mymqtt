@@ -43,7 +43,7 @@ class mymqttskill(MycroftSkill):
             LOGGER.info( "MQTT Connect: " + self.settings['mqtthost'] + ':' + str(self.settings['mqttport']) )
             self.mqttc.connect(self.settings['mqtthost'], int(self.settings['mqttport']))
 
-            self.mqttc.publish(dev_name + "/" + cmd_name, act_name)
+            self.mqttc.publish("/" + dev_name + "/" + cmd_name, act_name)
             self.mqttc.disconnect()
             self.speak_dialog("cmd.sent")
             LOGGER.info("MQTT Publish: " + dev_name + "/" + cmd_name + "/" + act_name)

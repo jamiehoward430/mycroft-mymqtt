@@ -7,7 +7,7 @@ Currently it will publish the action to a topic built from the commands said, fo
 - say `hey mycroft, switch the tv on` and mycroft will publish `on` to `tv/switch`.
 
 ## Examples
-* "Command vacuum to return home."
+* "Command Roomba to start."
 * "Turn the light on."
 * "Switch the tv on."
 
